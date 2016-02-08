@@ -1,0 +1,24 @@
+{
+  "name": "devblogs",
+  "description": "my devblog",
+  "main": "index.js",
+  "authors": [
+    "gosehwan <kally81@nate.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "node"
+  ],
+  "homepage": "https://github.com/kally81/devblogs",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.2.0"
+  }
+}
