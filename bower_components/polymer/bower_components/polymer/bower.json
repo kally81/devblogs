@@ -20,8 +20,7 @@
     "url": "https://github.com/Polymer/polymer.git"
   },
   "dependencies": {
-    "webcomponentsjs": "^0.7.20",
-    "iron-input": "PolymerElements/iron-input#^1.0.8"
+    "webcomponentsjs": "^0.7.20"
   },
   "devDependencies": {
     "web-component-tester": "*"
