@@ -41,8 +41,7 @@ var pg = require('pg');
 
 pg.connect(process.env.DATABASE_URL, function(err, client) {
   if (err){
-	  return console.error('error fetching client from pool', err);
-	  //throw err;
+	  throw err;
   }
   console.log('Connected to postgres! Getting schemas...');
 
