@@ -1,14 +1,57 @@
 var express = require('express');
+
+
 //var pg = require('pg');
-//pg.connect(process.env.DATABASE_URL, function(err, client) {
-//  if (err) throw err;
-//  console.log('Connected to postgres! Getting schemas...');
-//  client
-//    .query('SELECT table_schema,table_name FROM information_schema.tables;')
-//    .on('row', function(row) {
-//      console.log(JSON.stringify(row));
-//    });
+////var conString = "postgres://ixhgduhkaujyyy:PuGdNCVuDhnN6mLPgw5DJSES8V@ec2-54-83-36-203.compute-1.amazonaws.com:5432/d20skifon54bh6";
+////var client = new pg.Client(conString);
+//
+//var client = new pg.Client({
+//	user: "ixhgduhkaujyyy",
+//	password: "PuGdNCVuDhnN6mLPgw5DJSES8V",
+//	database: "d20skifon54bh6",
+//	port: 5432,
+//	host: "ec2-54-83-36-203.compute-1.amazonaws.com",
+//	ssl: true
 //});
+//client.connect();
+
+//var pg = require('pg');
+//var conString = "postgres://ixhgduhkaujyyy:PuGdNCVuDhnN6mLPgw5DJSES8V@ec2-54-83-36-203.compute-1.amazonaws.com:5432/d20skifon54bh6";
+//
+////this initializes a connection pool
+////it will keep idle connections open for a (configurable) 30 seconds
+////and set a limit of 20 (also configurable)
+//pg.connect(conString, function(err, client, done) {
+//  if(err) {
+//    return console.error('error fetching client from pool', err);
+//  }
+//  client.query('SELECT $1::int AS number', ['1'], function(err, result) {
+//    //call `done()` to release the client back to the pool
+//    done();
+//
+//    if(err) {
+//      return console.error('error running query', err);
+//    }
+//    console.log(result.rows[0].number);
+//    //output: 1
+//  });
+//});
+
+var pg = require('pg');
+
+pg.connect(process.env.DATABASE_URL, function(err, client) {
+  if (err){
+	  return console.error('error fetching client from pool', err);
+	  //throw err;
+  }
+  console.log('Connected to postgres! Getting schemas...');
+
+  client
+    .query('SELECT table_schema,table_name FROM information_schema.tables;')
+    .on('row', function(row) {
+      console.log(JSON.stringify(row));
+    });
+});
 
 var app = express();
 app.set('port', (process.env.PORT || 5000));
