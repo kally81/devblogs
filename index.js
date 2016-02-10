@@ -38,7 +38,11 @@ var express = require('express');
 //});
 
 
+
+
+
 var app = express();
+var pg = require('pg');
 app.set('port', (process.env.PORT || 5000));
 console.log('Node app is running on port', app.get('port'));
 app.use(express.static(__dirname + '/public'));
@@ -53,25 +57,22 @@ app.get('/', function(request, response) {
 });
 
 app.get('/index', function(request, response) {
+	pg.connect(process.env.DATABASE_URL, function(err, client) {
+		  if (err){
+			  return console.error('error fetching client from pool', err);
+			  //throw err;
+		  }
+		  console.log('Connected to postgres! Getting schemas...');
+
+		  client
+		    .query('SELECT table_schema,table_name FROM information_schema.tables;')
+		    .on('row', function(row) {
+		      console.log(JSON.stringify(row));
+		    });
+		});
+	
 	  response.render('pages/test');
 });
-
-var pg = require('pg');
-
-pg.connect(process.env.DATABASE_URL, function(err, client) {
-  if (err){
-	  return console.error('error fetching client from pool', err);
-	  //throw err;
-  }
-  console.log('Connected to postgres! Getting schemas...');
-
-  client
-    .query('SELECT table_schema,table_name FROM information_schema.tables;')
-    .on('row', function(row) {
-      console.log(JSON.stringify(row));
-    });
-});
-
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
